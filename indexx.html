@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Movies in Chennai · Pink Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --hot:#E0218A; --candy:#FF8FC7; --blush:#FFE3F1; --cream:#FFF7FB; --plum:#3A0B2B; --mute:#8A5A78; --gold:#FFC857; --line:#F6C6DE;
+  --bg:var(--cream); --card:#fff; --ink:var(--plum);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#240718; --card:#34102a; --ink:#FFE9F4; --mute:#D9A3C3; --line:#5a1f47; --blush:#4a1639}
+}
+*{box-sizing:border-box;margin:0}
+body{font-family:Nunito,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+h1,h2,h3,.logo,.chip,.btn{font-family:Fredoka,Nunito,sans-serif}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+/* top bar */
+.top{background:var(--hot);color:#fff;position:sticky;top:0;z-index:10}
+.top .in{max-width:1200px;margin:auto;display:flex;align-items:center;gap:16px;padding:12px 20px;flex-wrap:wrap}
+.logo{font-size:26px;font-weight:700;letter-spacing:-.5px}
+.logo b{background:#fff;color:var(--hot);padding:0 8px;border-radius:8px;margin-left:2px}
+.search{flex:1;min-width:200px;display:flex;align-items:center;background:#fff;border-radius:999px;padding:0 16px}
+.search input{flex:1;border:0;background:none;padding:10px 8px;font:inherit;color:#3A0B2B;outline:none}
+.pill{background:rgba(255,255,255,.18);border:0;color:#fff;padding:8px 16px;border-radius:999px;font:600 15px Fredoka;cursor:pointer}
+.btn{background:#fff;color:var(--hot);border:0;padding:9px 20px;border-radius:999px;font-weight:600;font-size:15px;cursor:pointer}
+.sub{background:var(--card);border-bottom:2px solid var(--line)}
+.sub .in{max-width:1200px;margin:auto;padding:0 20px;display:flex;gap:26px;overflow-x:auto;white-space:nowrap}
+.sub a{padding:12px 0;font-weight:600;color:var(--mute);border-bottom:3px solid transparent}
+.sub a.on,.sub a:hover{color:var(--hot);border-color:var(--hot)}
+
+/* hero */
+.hero{background:linear-gradient(120deg,#FF5FAE,#E0218A 55%,#B3126B);color:#fff;position:relative;overflow:hidden}
+.hero .in{max-width:1200px;margin:auto;padding:36px 20px 44px}
+.hero h1{font-size:clamp(34px,6vw,60px);line-height:1.05;font-weight:700;max-width:14ch}
+.hero p{margin-top:12px;font-size:18px;max-width:46ch;opacity:.95}
+.hero .stripe{position:absolute;right:-40px;top:-30px;width:340px;height:340px;border-radius:50%;background:repeating-conic-gradient(rgba(255,255,255,.14) 0 10deg,transparent 10deg 20deg)}
+.dates{display:flex;gap:10px;margin-top:24px;overflow-x:auto;padding-bottom:4px}
+.date{min-width:62px;text-align:center;border:2px solid rgba(255,255,255,.55);border-radius:16px;padding:6px 8px;background:transparent;color:#fff;cursor:pointer;font:inherit}
+.date small{display:block;font-size:12px;opacity:.9}
+.date b{font:600 20px Fredoka}
+.date.on{background:#fff;color:var(--hot);border-color:#fff}
+
+/* layout */
+.wrap{max-width:1200px;margin:auto;padding:24px 20px 60px;display:grid;grid-template-columns:260px 1fr;gap:28px}
+aside .box{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:14px 16px;margin-bottom:14px}
+aside h3{font-size:17px;margin-bottom:10px;color:var(--hot)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid var(--hot);color:var(--hot);background:transparent;border-radius:999px;padding:4px 14px;font-size:14px;font-weight:500;cursor:pointer}
+.chip.on{background:var(--hot);color:#fff}
+.reset{width:100%;border:0;border-radius:14px;padding:10px;background:var(--blush);color:var(--hot);font:600 15px Fredoka;cursor:pointer}
+.head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;gap:10px;flex-wrap:wrap}
+.head h2{font-size:28px}
+.head span{color:var(--mute)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:22px}
+
+/* movie card */
+.card{display:block;transition:transform .15s}
+.card:hover{transform:translateY(-4px)}
+.poster{aspect-ratio:2/3;border-radius:18px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;color:#fff;box-shadow:0 10px 24px -12px rgba(224,33,138,.55)}
+.poster .em{position:absolute;top:14px;left:0;right:0;text-align:center;font-size:64px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))}
+.poster .t{font:700 22px/1.05 Fredoka;text-shadow:0 2px 6px rgba(0,0,0,.3);position:relative}
+.poster .promo{position:absolute;top:10px;right:10px;background:var(--gold);color:var(--plum);font:600 11px Fredoka;padding:2px 8px;border-radius:999px}
+.rate{margin-top:-1px;background:var(--plum);color:#fff;border-radius:0 0 14px 14px;padding:7px 12px;font-size:14px;display:flex;gap:6px;align-items:center;margin-inline:6px;position:relative}
+.rate i{color:var(--candy);font-style:normal}
+.card h3{font-size:17px;margin-top:10px;font-weight:600}
+.card p{font-size:14px;color:var(--mute)}
+.empty{grid-column:1/-1;text-align:center;padding:50px 10px;background:var(--blush);border-radius:20px}
+
+footer{background:var(--plum);color:#FFD3EA;text-align:center;padding:28px 20px;font-size:14px}
+footer b{font-family:Fredoka;color:#fff;font-size:18px}
+
+@media(max-width:820px){
+  .wrap{grid-template-columns:1fr}
+  .grid{grid-template-columns:repeat(2,1fr);gap:16px}
+  .hero .stripe{opacity:.5}
+}
+@media(prefers-reduced-motion:reduce){.card{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="in">
+    <a class="logo" href="#">book<b>my</b>show</a>
+    <label class="search" aria-label="Search movies">
+      <span aria-hidden="true">🔎</span>
+      <input id="q" type="search" placeholder="Search for movies, cinemas and more">
+    </label>
+    <button class="pill" type="button">📍 Chennai ▾</button>
+    <button class="btn" type="button">Sign in</button>
+  </div>
+</header>
+
+<nav class="sub" aria-label="Sections">
+  <div class="in">
+    <a class="on" href="#">Movies</a><a href="#">Stream</a><a href="#">Events</a><a href="#">Plays</a><a href="#">Sports</a><a href="#">Activities</a><a href="#">Cinemas</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="stripe" aria-hidden="true"></div>
+  <div class="in">
+    <h1>Movies in Chennai</h1>
+    <p>Grab your pinkest outfit. Pick a day, pick a show, and book your seats.</p>
+    <div class="dates" id="dates" role="group" aria-label="Pick a date"></div>
+  </div>
+</section>
+
+<main class="wrap">
+  <aside aria-label="Filters">
+    <div class="box"><h3>Languages</h3><div class="chips" data-f="lang"></div></div>
+    <div class="box"><h3>Genres</h3><div class="chips" data-f="genre"></div></div>
+    <div class="box"><h3>Format</h3><div class="chips" data-f="fmt"></div></div>
+    <button class="reset" id="reset" type="button">Clear all filters</button>
+  </aside>
+
+  <section>
+    <div class="head"><h2>Now showing</h2><span id="count"></span></div>
+    <div class="grid" id="grid"></div>
+  </section>
+</main>
+
+<footer><b>bookmyshow · pink edition</b><br>A themed design demo. Movie titles, ratings and posters are made-up placeholders.</footer>
+
+<script>
+const MOVIES=[
+ {t:"Dreamhouse Diaries",l:"English",g:["Comedy","Fantasy"],f:["2D","3D"],r:8.9,v:"42K",e:"🏡",c:["#FF5FAE","#FF9ECB"],p:"Trending"},
+ {t:"Marina Beach Mystery",l:"Tamil",g:["Thriller","Drama"],f:["2D"],r:8.4,v:"18K",e:"🌊",c:["#B3126B","#FF5FAE"]},
+ {t:"Kanchipuram Kanavu",l:"Tamil",g:["Drama","Romance"],f:["2D"],r:9.1,v:"27K",e:"👗",c:["#E0218A","#FFB3DA"],p:"Top rated"},
+ {t:"Rollerblade Rani",l:"Hindi",g:["Action","Comedy"],f:["2D","IMAX"],r:7.8,v:"9.6K",e:"🛼",c:["#FF3D9A","#FFC857"]},
+ {t:"Pink Convertible",l:"English",g:["Adventure","Comedy"],f:["2D","IMAX","3D"],r:8.2,v:"31K",e:"🚗",c:["#D4177F","#FF9ECB"]},
+ {t:"Vaanam Thodum",l:"Telugu",g:["Action","Drama"],f:["2D","IMAX"],r:8.6,v:"22K",e:"🚀",c:["#8E0F5B","#E0218A"],p:"New"},
+ {t:"Sparkle Squad",l:"English",g:["Animation","Comedy"],f:["2D","3D"],r:8.0,v:"15K",e:"✨",c:["#FF7AC0","#FFE3F1"]},
+ {t:"Filter Coffee Nights",l:"Tamil",g:["Romance","Comedy"],f:["2D"],r:8.8,v:"13K",e:"☕",c:["#C2156F","#FFA3D1"]},
+ {t:"The Last Ballet Shoe",l:"Hindi",g:["Drama","Romance"],f:["2D"],r:7.5,v:"6.1K",e:"🩰",c:["#E0218A","#FFC4E2"]},
+ {t:"Midnight at the Mall",l:"Malayalam",g:["Thriller","Fantasy"],f:["2D","IMAX"],r:8.3,v:"11K",e:"🛍️",c:["#7A0C4E","#FF5FAE"]},
+ {t:"Glitter Gang Goes West",l:"English",g:["Animation","Adventure"],f:["2D","3D"],r:7.9,v:"8.4K",e:"🤠",c:["#FF4DA6","#FFD36B"]},
+ {t:"Sundari 2.0",l:"Telugu",g:["Comedy","Romance"],f:["2D"],r:7.2,v:"5.3K",e:"💄",c:["#F0359A","#FFB3DA"]}
+];
+const DAYS=["Thu","Fri","Sat","Sun","Mon","Tue","Wed"], DATES=[15,16,17,18,19,20,21];
+const F={lang:new Set(),genre:new Set(),fmt:new Set()};
+const opts={
+  lang:[...new Set(MOVIES.map(m=>m.l))],
+  genre:[...new Set(MOVIES.flatMap(m=>m.g))].sort(),
+  fmt:["2D","3D","IMAX"]
+};
+const $=s=>document.querySelector(s);
+
+// dates
+$("#dates").innerHTML=DAYS.map((d,i)=>`<button class="date${i?'':' on'}" type="button"><small>${d}</small><b>${DATES[i]}</b><small>Oct</small></button>`).join("");
+$("#dates").addEventListener("click",e=>{const b=e.target.closest(".date");if(!b)return;
+  document.querySelectorAll(".date").forEach(x=>x.classList.toggle("on",x===b));});
+
+// filters
+document.querySelectorAll("[data-f]").forEach(box=>{
+  const k=box.dataset.f;
+  box.innerHTML=opts[k].map(o=>`<button class="chip" type="button" aria-pressed="false">${o}</button>`).join("");
+  box.addEventListener("click",e=>{const c=e.target.closest(".chip");if(!c)return;
+    const on=!F[k].has(c.textContent);
+    on?F[k].add(c.textContent):F[k].delete(c.textContent);
+    c.classList.toggle("on",on);c.setAttribute("aria-pressed",on);render();});
+});
+$("#reset").onclick=()=>{Object.values(F).forEach(s=>s.clear());$("#q").value="";
+  document.querySelectorAll(".chip").forEach(c=>{c.classList.remove("on");c.setAttribute("aria-pressed","false")});render();};
+$("#q").addEventListener("input",render);
+
+function render(){
+  const q=$("#q").value.trim().toLowerCase();
+  const list=MOVIES.filter(m=>
+    (!q||m.t.toLowerCase().includes(q)) &&
+    (!F.lang.size||F.lang.has(m.l)) &&
+    (!F.genre.size||m.g.some(x=>F.genre.has(x))) &&
+    (!F.fmt.size||m.f.some(x=>F.fmt.has(x))));
+  $("#count").textContent=list.length+(list.length===1?" movie":" movies");
+  $("#grid").innerHTML=list.length?list.map(m=>`
+    <a class="card" href="#" aria-label="${m.t}">
+      <div class="poster" style="background:linear-gradient(160deg,${m.c[0]},${m.c[1]})">
+        ${m.p?`<span class="promo">${m.p}</span>`:""}
+        <span class="em" aria-hidden="true">${m.e}</span>
+        <span class="t">${m.t}</span>
+      </div>
+      <div class="rate"><i>♥</i> ${m.r}/10 <span style="opacity:.75">${m.v} votes</span></div>
+      <h3>${m.t}</h3>
+      <p>${m.g.join("/")} · ${m.l}</p>
+    </a>`).join("")
+    :`<div class="empty"><h3>No movies match these filters</h3><p>Clear a filter or change your search to see more shows.</p></div>`;
+}
+render();
+</script>
+</body>
+</html>
